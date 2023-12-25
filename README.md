@@ -1,27 +1,18 @@
 # CFP: Collaborative filter pruning for efficient automatic surface defect detection
 
 
+RepVGG-A0
+
+[Baidu Yun](https://pan.baidu.com/s/1TQGk694k-dY2HvNrv7--7g?pwd=9auu) [Google Yun](https://drive.google.com/file/d/17hhNL-pE4yp0wlCsHpBmsDYtPOt3OL6q/view?usp=drive_link)
+
+
+VGG-16 
+
+[Baidu Yun](https://pan.baidu.com/s/1MF_hrfixW8ZMCp5Yaq_vXA?pwd=wm34) [Google Yun](https://drive.google.com/file/d/1ffb9XvHcT4YwHRepmBctBo0IQzXZO2Io/view?usp=drive_link)
+
+
 ## Usage
 
-### Code Requirements
-The environment requirements for the code in this repository are provided in requirements.txt. They can be installed in bulk with the following command:
-
-```
-pip install -r requirements.txt
-```
-
-### Dataset
-
-
-- [X-SDD](https://pan.baidu.com/s/1EZJIWr7rUWI7l9_0BQVeOAw)
-
-   https://pan.baidu.com/s/1EZJIWr7rUWI7l9_0BQVeOA 提取码:fuyq
-- [GC10-DET](https://pan.baidu.com/s/1_P2fOt5LV6Y5CA4ZVSMcWQ)
-
-   https://pan.baidu.com/s/1_P2fOt5LV6Y5CA4ZVSMcWQ 提取码:7f0e
-- [ELPV-DC](https://pan.baidu.com/s/1iAdlWv1C0sYJ7XEhH7Em8g)
-
-   https://pan.baidu.com/s/1iAdlWv1C0sYJ7XEhH7Em8g 提取码:4282
 
 ### 1. Train Baseline
 
@@ -32,7 +23,9 @@ python train_baseline_RepVGGA0.py \
 --dataset GC10-DET \
 --input_size 224 \
 --num_classes 10 \
---gpu 6
+--pretrain_dir ./RepVGG-A0-train.pth \
+--job_dir ./Original_RepVGGA0 \
+--gpu 2
 ```
 
 ```shell
@@ -40,15 +33,19 @@ python train_class_balance_RepVGGA0.py \
 --dataset GC10-DET \
 --input_size 224 \
 --num_classes 10 \
---gpu 6
+--pretrain_dir ./RepVGG-A0-train.pth \
+--job_dir ./Original_RepVGGA0 \
+--gpu 2
 ```
 
 ```shell
 python RepVGG_convert.py \
---load ./RepVGG_RL/model_best.pth.tar \
---save ./RepVGG_RL/RepVGG_convert.pth.tar \
---num_classes 10 \
+--load ./Original_RepVGGA0/model_best.pth.tar \
+--save ./Original_RepVGGA0/RepVGG_convert.pth.tar \
+--num_classes 10 
 ```
+
+
 
 #### RepVGG-A0 on X-SDD dataset
 ```shell
@@ -56,7 +53,9 @@ python train_baseline_RepVGGA0.py \
 --dataset X-SDD \
 --input_size 128 \
 --num_classes 7 \
---gpu 6
+--pretrain_dir ./RepVGG-A0-train.pth \
+--job_dir ./Original_RepVGGA0 \
+--gpu 2
 ```
 
 ```shell
@@ -64,7 +63,16 @@ python train_class_balance_RepVGGA0.py \
 --dataset X-SDD \
 --input_size 128 \
 --num_classes 7 \
---gpu 6
+--pretrain_dir ./RepVGG-A0-train.pth \
+--job_dir ./Class_balance_RepVGGA0 \
+--gpu 2
+```
+
+```shell
+python RepVGG_convert.py \
+--load ./Class_balance_RepVGGA0/model_best.pth.tar \
+--save ./Class_balance_RepVGGA0/RepVGG_convert.pth.tar \
+--num_classes 7 
 ```
 
 #### VGG-16 on GC10-DET dataset
@@ -73,7 +81,8 @@ python train_baseline_VGG.py \
 --dataset GC10-DET \
 --input_size 224 \
 --num_classes 10 \
---gpu 6
+--job_dir ./Original_VGG \
+--gpu 2
 ```
 
 ```shell
@@ -81,7 +90,8 @@ python train_class_balance_VGG.py \
 --dataset GC10-DET \
 --input_size 224 \
 --num_classes 10 \
---gpu 6
+--job_dir ./Class_balance_VGG \
+--gpu 2
 ```
 #### VGG-16 on X-SDD dataset
 ```shell
@@ -89,7 +99,8 @@ python train_baseline_VGG.py \
 --dataset X-SDD \
 --input_size 128 \
 --num_classes 7 \
---gpu 6
+--job_dir ./Original_VGG \
+--gpu 2
 ```
 
 ```shell
@@ -97,7 +108,8 @@ python train_class_balance_VGG.py \
 --dataset X-SDD \
 --input_size 128 \
 --num_classes 7 \
---gpu 6
+--job_dir ./Class_balance_VGG \
+--gpu 2
 ```
 
 #### DDDN on GC10-DET dataset
@@ -106,14 +118,15 @@ python train_baseline_DDDN.py \
 --dataset GC10-DET \
 --input_size 224 \
 --num_classes 10 \
---gpu 6
+--gpu 2
 ```
+
 ```shell
 python train_class_balance_DDDN.py \
 --dataset GC10-DET \
 --input_size 224 \
 --num_classes 10 \
---gpu 6
+--gpu 2
 ```
 
 #### DDDN on X-SDD dataset
@@ -121,15 +134,17 @@ python train_class_balance_DDDN.py \
 python train_baseline_DDDN.py \
 --dataset X-SDD \
 --input_size 224 \
---num_classes 10 \
---gpu 6
+--num_classes 7 \
+--job_dir ./Original_DDDN \
+--gpu 2
 ```
 ```shell
 python train_class_balance_DDDN.py \
 --dataset X-SDD \
 --input_size 224 \
---num_classes 10 \
---gpu 6
+--num_classes 7 \
+--job_dir ./Class_balance_DDDN \
+--gpu 2
 ```
 
 ### 2. Generate Feature Maps.
@@ -172,6 +187,7 @@ python calculate_hierarchical_clustering.py \
 
 ### 6. Prune and Fine-tune CNN Models.
 #### RepVGG-A0 on X-SDD dataset
+
 ```shell
 python train_pruning_CFP.py \
 --arch RepVGGA0 \
@@ -179,12 +195,12 @@ python train_pruning_CFP.py \
 --input_size 128 \
 --num_classes 7 \
 --job_dir ./pruned_CFP_RepVGGA0 \
---pretrain_dir  ./RepVGG_RL/RepVGG_convert.pth.tar \
---teacher_dir ./RepVGG_CL/RepVGG_convert.pth.tar \
+--pretrain_dir  ./Original_RepVGGA0/RepVGG_convert.pth.tar \
+--teacher_dir ./Class_balance_RepVGGA0/RepVGG_convert.pth.tar \
 --rank_conv_prefix ./Rank_RepVGG-A0 \
 --hierarchical_conv_prefix ./HC_RepVGG-A0 \
 --compress_rate [0.]+[0.25]*6+[0.35]*14  \
---gpu 6
+--gpu 2
 ```
 
 #### RepVGG-A0 on GC10-DET dataset
@@ -195,12 +211,12 @@ python train_pruning_CFP.py \
 --input_size 224 \
 --num_classes 10 \
 --job_dir ./pruned_CFP_RepVGGA0 \
---pretrain_dir  ./RepVGG_RL/RepVGG_convert.pth.tar \
---teacher_dir ./RepVGG_CL/RepVGG_convert.pth.tar \
+--pretrain_dir  ./Original_RepVGG/RepVGG_convert.pth.tar \
+--teacher_dir ./Original_RepVGG/RepVGG_convert.pth.tar \
 --rank_conv_prefix ./Rank_RepVGG-A0 \
 --hierarchical_conv_prefix ./HC_RepVGG-A0 \
 --compress_rate [0.]+[0.25]*6+[0.35]*14  \
---gpu 6
+--gpu 2
 ```
 
 #### VGG-16 on X-SDD dataset
@@ -211,12 +227,12 @@ python train_pruning_CFP.py \
 --input_size 128 \
 --num_classes 7 \
 --job_dir ./pruned_CFP_vgg_16_bn \
---pretrain_dir  ./VGG_RL/model_best.pth.tar \
---teacher_dir ./VGG_CL/model_best.pth.tar \
+--pretrain_dir  ./Original_VGG/model_best.pth.tar \
+--teacher_dir ./Class_balance_VGG/model_best.pth.tar \
 --rank_conv_prefix ./Rank_vgg_16_bn \
 --hierarchical_conv_prefix ./HC_vgg_16_bn \
 --compress_rate [0.4]*5+[0.5]*7  \
---gpu 6
+--gpu 2
 ```
 
 #### VGG-16 on GC10-DET dataset
@@ -227,12 +243,12 @@ python train_pruning_CFP.py \
 --input_size 224 \
 --num_classes 10 \
 --job_dir ./pruned_CFP_vgg_16_bn \
---pretrain_dir  ./VGG_RL/model_best.pth.tar \
---teacher_dir ./VGG_CL/model_best.pth.tar \
+--pretrain_dir  ./Original_VGG/model_best.pth.tar \
+--teacher_dir ./Class_balance_VGG/model_best.pth.tar \
 --rank_conv_prefix ./Rank_vgg_16_bn \
 --hierarchical_conv_prefix ./HC_vgg_16_bn \
 --compress_rate [0.4]*5+[0.5]*7  \
---gpu 6
+--gpu 2
 ```
 
 
@@ -245,12 +261,12 @@ python train_pruning_CFP.py \
 --input_size 128 \
 --num_classes 7 \
 --job_dir ./pruned_CFP_DDDN \
---pretrain_dir ./DDDN_RL/model_best.pth.tar \
---teacher_dir ./DDDN_CL/model_best.pth.tar \
+--pretrain_dir ./Original_DDDN/model_best.pth.tar \
+--teacher_dir ./Class_balance_DDDN/model_best.pth.tar \
 --rank_conv_prefix ./Rank_DDDN \
 --hierarchical_conv_prefix ./HC_DDDN \
 --compress_rate [0.]+[0.2]+[0.2]*2+[0.25]*4+[0.25]*8+[0.30]*8+[0.30]*2 \
---gpu 6
+--gpu 2 
 ```
 
 #### DDDN on GC10-DET dataset
@@ -267,7 +283,7 @@ python train_pruning_CFP.py \
 --rank_conv_prefix ./Rank_DDDN \
 --hierarchical_conv_prefix ./HC_DDDN \
 --compress_rate [0.]+[0.2]+[0.2]*2+[0.2]*4+[0.25]*8+[0.25]*8+[0.25]*2 \
---gpu 6 
+--gpu 2 
 ```
 
 ### 7. Evaluate Pruned Model
@@ -287,7 +303,7 @@ python train_pruning_CFP.py \
 --test_only True \
 --test_model_dir ./experimental_results/RepVGGA0/model_best.pth.tar \
 --compress_rate [0.]+[0.25]*6+[0.35]*14  \
---gpu 6
+--gpu 2
 ```
 
 #### RepVGG-A0 on GC10-DET dataset
@@ -305,7 +321,7 @@ python train_pruning_CFP.py \
 --test_only True \
 --test_model_dir ./experimental_result/RepVGGA0/model_best.pth.tar \
 --compress_rate [0.]+[0.25]*6+[0.35]*14  \
---gpu 6
+--gpu 2
 ```
 
 #### VGG-16 on X-SDD dataset
@@ -323,7 +339,7 @@ python train_pruning_CFP.py \
 --test_only True \
 --test_model_dir ./experimental_results/VGG16/model_best.pth.tar \
 --compress_rate [0.4]*5+[0.5]*7  \
---gpu 6
+--gpu 2
 ```
 
 #### VGG-16 on GC10-DET dataset
@@ -341,7 +357,7 @@ python train_pruning_CFP.py \
 --test_only True \
 --test_model_dir ./experimental_result/VGG16/model_best.pth.tar \
 --compress_rate [0.4]*5+[0.5]*7  \
---gpu 6
+--gpu 2
 ```
 
 #### DDDN on X-SDD dataset
@@ -360,7 +376,7 @@ python train_pruning_CFP.py \
 --test_only True \
 --test_model_dir ./experimental_results/DDDN/model_best.pth.tar \
 --compress_rate  [0.]+[0.2]+[0.2]*2+[0.25]*4+[0.25]*8+[0.30]*8+[0.30]*2 \
---gpu 6 
+--gpu 3 
 ```
 
 
@@ -380,7 +396,7 @@ python train_pruning_CFP.py \
 --test_only True \
 --test_model_dir ./experimental_result/DDDN/model_best.pth.tar \
 --compress_rate [0.]+[0.2]+[0.2]*2+[0.2]*4+[0.25]*8+[0.25]*8+[0.25]*2 \
---gpu 6 
+--gpu 3 
 ```
 
 
@@ -388,15 +404,19 @@ python train_pruning_CFP.py \
 
 We provide our pretrained models and pruned models. Moreover, we provide the results of matrix rank and FCC.
 
-- [X-SDD](https://pan.baidu.com/s/1uaT0j2FzbsoTYV1WnBbv1w)
+- [Pre-trained Models](https://drive.google.com/drive/folders/1b--dZlvKUUu0rXqMYAtIr0ynHQHuEWDI?usp=sharing)
+   - GC10-DET: VGG-16, RepVGG-A0, DDDN.
+   - X-SDD: VGG-16, RepVGG-A0, DDDN.
+   - ELPV-DC: VGG-16, RepVGG-A0, DDDN.
+   - NEu-CLS: VGG-16, ResNet-50, MobileNetV2
+  
+- [Pruned Models](https://drive.google.com/drive/folders/1b--dZlvKUUu0rXqMYAtIr0ynHQHuEWDI?usp=sharing)
+   - GC10-DET: VGG-16, RepVGG-A0, DDDN.
+   - X-SDD: VGG-16, RepVGG-A0, DDDN.
+   - ELPV-DC: VGG-16, RepVGG-A0, DDDN.
+   - NEu-CLS: VGG-16, ResNet-50, MobileNetV2
+- [FCC results](https://drive.google.com/drive/folders/1b--dZlvKUUu0rXqMYAtIr0ynHQHuEWDI?usp=sharing)
 
-   https://pan.baidu.com/s/1uaT0j2FzbsoTYV1WnBbv1w 提取码:1ui5
-- [GC10-DET](https://pan.baidu.com/s/1_P2fOt5LV6Y5CA4ZVSMcWQ)
-
-   https://pan.baidu.com/s/1_P2fOt5LV6Y5CA4ZVSMcWQ 提取码:7f0e
-- [ELPV-DC](https://pan.baidu.com/s/1iAdlWv1C0sYJ7XEhH7Em8g)
-
-   https://pan.baidu.com/s/1iAdlWv1C0sYJ7XEhH7Em8g 提取码:4282
-
+- [Matrix rank](https://drive.google.com/drive/folders/1b--dZlvKUUu0rXqMYAtIr0ynHQHuEWDI?usp=sharing)
 
 
