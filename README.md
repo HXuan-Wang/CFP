@@ -2,6 +2,7 @@
 
 ## Pretrained models
 RepVGG-A0  [Baidu Yun](https://pan.baidu.com/s/1TQGk694k-dY2HvNrv7--7g?pwd=9auu) [Google Yun](https://drive.google.com/file/d/17hhNL-pE4yp0wlCsHpBmsDYtPOt3OL6q/view?usp=drive_link) 
+
 VGG-16 [Baidu Yun](https://pan.baidu.com/s/1MF_hrfixW8ZMCp5Yaq_vXA?pwd=wm34) [Google Yun](https://drive.google.com/file/d/1ffb9XvHcT4YwHRepmBctBo0IQzXZO2Io/view?usp=drive_link)
 
 
