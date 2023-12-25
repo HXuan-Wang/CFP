@@ -6,7 +6,7 @@ import torch.optim
 import torch.utils.data
 import torch.utils.data.distributed
 import torch.nn as nn
-from repvgg import get_RepVGG_func_by_name, repvgg_model_convert
+from models.repvgg import get_RepVGG_func_by_name, repvgg_model_convert
 
 
 

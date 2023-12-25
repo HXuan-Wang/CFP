@@ -1993,7 +1993,7 @@ def main():
     # origin_model = origin_model.cuda()
 
     input_image_size = input_size
-    if args.arch == "DDDN" or (args.arch == 'vgg_16_bn' and args.dataset=='X-SDD'):
+    if args.arch == "DDDN":
         input_image = torch.randn(1, 3, input_image_size, input_image_size).cuda()
         flops, params = profile(origin_model, inputs=(input_image,))
         logger.info('Params: %.2f M' % (params / 1e6))
@@ -2001,7 +2001,7 @@ def main():
 
     model_t = eval(args.arch)(num_classes=num_classes, sparsity_channels=None, original=True)
     model_t = model_t.cuda()
-    if args.arch == 'DDDN' :
+    if args.arch == 'DDDN':
         input_image_size = input_size
         input_image = torch.randn(1, 3, input_image_size, input_image_size).cuda()
         flops, params = profile(model_t, inputs=(input_image,))
